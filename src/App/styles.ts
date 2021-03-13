@@ -33,9 +33,8 @@ export const getStyles = makeStyles(() => ({
             borderBottomColor: '#fff',
         },
     },
-    button: {
-        marginTop: 20,
-        borderColor: 'beige',
-        color: 'beige'
+    container: {
+        width: '50%',
+        paddingBottom: 100
     }
 }));

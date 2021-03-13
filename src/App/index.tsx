@@ -9,9 +9,9 @@ export const App = () => {
 
     let stars = [];
     for (let i = 0; i < values; i++) {
-        
+
         stars.push(
-            <Grid key={i} container direction='column' alignItems='flex-start'>
+            <Grid key={i} item container direction='column' alignItems='flex-start'>
                 <Grid item>Домен:  </Grid>
                 <Grid item>Регистратор:  </Grid>
                 <Grid item>Логин:   </Grid>
@@ -31,9 +31,12 @@ export const App = () => {
     return (
         <Grid className={classes.app}>
             <TextField className={classes.input} onChange={(e) => setvalues(Number(e.currentTarget.value))} />
-            {stars.map(el => (
-                el
-            ))}
+            <Grid container direction='column' alignItems='center' className={classes.container}>
+                {stars.map(el => (
+                    el
+                ))}
+            </Grid>
+
         </Grid>
     );
 }
