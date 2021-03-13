@@ -1,4 +1,4 @@
-<h1 align="center">Domain Templtes App</h1>
+<h1 align="center">Domain Templates App</h1>
 
 <h1 align="center">
 
