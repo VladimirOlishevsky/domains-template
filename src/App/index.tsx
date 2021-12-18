@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import { TextField, Tooltip } from '@material-ui/core';
 import { getStyles } from './styles';
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+dayjs.extend(customParseFormat)
+
 
 export const App = () => {
     const classes = getStyles();
 
     const [mainValue, setMainValue] = useState(''); // главное число которое не меняется
     const [firstValue, setFirstValue] = useState(''); // первое из вводимых данных
-
-
+    const [currentDate, setCurrentDate] = useState(''); // первое из вводимых данных
 
     const main1Part = String(mainValue).split('.')[0]; // главное число до точки
     const main2Part = String(mainValue).split('.')[1]; // главное число после точки
@@ -84,20 +87,70 @@ export const App = () => {
         return final
     }
 
-    const allRes = result()
+    const allRes = result();
+    const resultPart1 = Number(allRes.split('.')[0])
+    const result2Part = Number((Number(allRes.split('.')[1]) / 60).toFixed(2));
+    const sum2action = resultPart1 + result2Part // сумма после второго действия
+
+
+    const action3 = sum2action / 2.5 // третье действие
+    const month = String(action3).split('.')[0];
+    const date = Math.round(Number(Number(`0.${String(action3).split('.')[1]}`).toFixed(2)) * 30)
+
+    const adaptDate = currentDate && dayjs(currentDate, 'DD.MM.YYYY')
+    const finalDate = (month || date) && dayjs(adaptDate).add(Number(month), 'month').add(Number(date), 'day').format('DD MMMM YYYY')
 
     return (
         <div className={classes.app}>
-            <Tooltip title="Необходимо добавить 2 цифру" arrow open={main2Part && main2Part.length < 2 ? true : false}>
-                <TextField className={classes.input} onChange={(e) => setMainValue(e.currentTarget.value)} />
-            </Tooltip>
+            <div className={classes.inputBlock}>
+                <Tooltip title="Необходимо добавить 2 цифру" arrow open={main2Part && main2Part.length < 2 ? true : false}>
+                    <TextField placeholder='градусы Мундхеши' className={classes.input} onChange={(e) => setMainValue(e.currentTarget.value)} />
+                </Tooltip>
 
-            <Tooltip title="Необходимо добавить 2 цифру" arrow open={firstValue2Part && firstValue2Part.length < 2 ? true : false}>
-                <TextField className={classes.input} onChange={(e) => setFirstValue(e.currentTarget.value)} />
-            </Tooltip>
-            <div>
-                {allRes}
+                <Tooltip title="Необходимо добавить 2 цифру" arrow open={firstValue2Part && firstValue2Part.length < 2 ? true : false}>
+                    <TextField placeholder='градусы планеты' className={classes.input} onChange={(e) => setFirstValue(e.currentTarget.value)} />
+                </Tooltip>
+
+                <Tooltip title="Необходимо добавить 2 цифру" arrow open={firstValue2Part && firstValue2Part.length < 2 ? true : false}>
+                    <TextField placeholder='дата рождения и текущий год' className={classes.input} onChange={(e) => setCurrentDate(e.currentTarget.value)} />
+                </Tooltip>
             </div>
+
+            <div>
+                <div>
+                    {allRes}
+                </div>
+                <div>
+                    ____________________
+                </div>
+                <div>
+                    {resultPart1 + result2Part}
+                </div>
+                <div>
+                    ____________________
+                </div>
+                <div>
+                    {(resultPart1 + result2Part) / 2.5}
+                </div>
+                <div>
+                    ____________________
+                </div>
+                <div style={{ display: 'flex', gap: 8, flexDirection: 'column' }}>
+                    <div>
+                        месяцы: {month}
+                    </div>
+                    <div>
+                        дни: {date}
+                    </div>
+                </div>
+                <div>
+                    ____________________
+                </div>
+                <div>
+                    дата {finalDate}
+                </div>
+            </div>
+
         </div>
     );
 }

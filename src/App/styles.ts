@@ -13,10 +13,16 @@ export const getStyles = makeStyles(() => ({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        fontSize: 'calc(10px + 2vmin)'
+        fontSize: 'calc(10px + 2vmin)',
+        gap: 64
+    },
+    inputBlock: {
+        display: 'flex',
+        flexDirection: 'column',
+        width: 300
     },
     input: {
-        marginBottom: 100,
+        marginBottom: 10,
         '& .MuiInputLabel-root': {
             color: "beige"
           },
