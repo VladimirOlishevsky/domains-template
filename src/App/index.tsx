@@ -95,7 +95,7 @@ export const App = () => {
 
     const action3 = sum2action / 2.5 // третье действие
     const month = String(action3).split('.')[0];
-    const date = Math.round(Number(Number(`0.${String(action3).split('.')[1]}`).toFixed(2)) * 30)
+    const date = Math.round(Number(Number(`0.${String(action3).split('.')[1]}`).toFixed(2)) * 30) || 0
 
     const adaptDate = currentDate && dayjs(currentDate, 'DD.MM.YYYY')
     const finalDate = (month || date) && dayjs(adaptDate).add(Number(month), 'month').add(Number(date), 'day').format('DD MMMM YYYY')
@@ -111,9 +111,7 @@ export const App = () => {
                     <TextField placeholder='градусы планеты' className={classes.input} onChange={(e) => setFirstValue(e.currentTarget.value)} />
                 </Tooltip>
 
-                <Tooltip title="Необходимо добавить 2 цифру" arrow open={firstValue2Part && firstValue2Part.length < 2 ? true : false}>
-                    <TextField placeholder='дата рождения и текущий год' className={classes.input} onChange={(e) => setCurrentDate(e.currentTarget.value)} />
-                </Tooltip>
+                <TextField placeholder='дата рождения и текущий год' className={classes.input} onChange={(e) => setCurrentDate(e.currentTarget.value)} />
             </div>
 
             <div>
